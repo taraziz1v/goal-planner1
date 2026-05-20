@@ -36,7 +36,7 @@ export interface GoalPlan {
 const STORAGE_KEY = 'goal_planner_api_config';
 
 const DEFAULT_CONFIG: ApiConfig = {
-  apiKey: 'AIzaSyBsKw2PjylFKpO5_BIkpRHlWBUoMqICMGU',
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY || '',
   baseUrl: 'https://generativelanguage.googleapis.com/v1beta',
   model: 'gemini-2.5-flash',
   provider: 'gemini',
@@ -48,7 +48,12 @@ export function getApiConfig(): ApiConfig {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved) {
     try {
-      return { ...DEFAULT_CONFIG, ...JSON.parse(saved) };
+      const parsed = JSON.parse(saved);
+      // Clean up old hardcoded keys if still stored in the browser's localStorage
+      if (parsed.apiKey === 'AIzaSyBsKw2PjylFKpO5_BIkpRHlWBUoMqICMGU') {
+        parsed.apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
+      }
+      return { ...DEFAULT_CONFIG, ...parsed };
     } catch {
       return DEFAULT_CONFIG;
     }
