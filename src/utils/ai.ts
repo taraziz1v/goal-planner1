@@ -2,7 +2,7 @@ export interface ApiConfig {
   apiKey: string;
   baseUrl: string;
   model: string;
-  provider: 'openai' | 'openrouter';
+  provider: 'openai' | 'openrouter' | 'gemini';
   mockMode: boolean;
 }
 
@@ -36,11 +36,11 @@ export interface GoalPlan {
 const STORAGE_KEY = 'goal_planner_api_config';
 
 const DEFAULT_CONFIG: ApiConfig = {
-  apiKey: '',
-  baseUrl: 'https://api.openai.com/v1',
-  model: 'gpt-4o-mini',
-  provider: 'openai',
-  mockMode: true,
+  apiKey: 'AIzaSyBsKw2PjylFKpO5_BIkpRHlWBUoMqICMGU',
+  baseUrl: 'https://generativelanguage.googleapis.com/v1beta',
+  model: 'gemini-2.5-flash',
+  provider: 'gemini',
+  mockMode: false,
 };
 
 // Load configurations
@@ -372,7 +372,7 @@ export function getMockPlan(goal: string, timeframe: string, qa: Array<{ questio
   };
 }
 
-// Call live OpenAI or OpenRouter APIs
+// Call live APIs (Gemini, OpenAI, or OpenRouter)
 export async function fetchAIQuestions(goal: string, timeframe: string, config: ApiConfig): Promise<Question[]> {
   if (config.mockMode || !config.apiKey) {
     // Delay to simulate API call
@@ -399,38 +399,78 @@ CRITICAL REQUIREMENTS:
 Do not write anything except the pure JSON. Do not include markdown code block syntax (like \`\`\`json) in the raw response, just output the valid JSON. Make the questions specific, mature, and deeply tailored to the goal (avoid generic template answers).`;
 
   try {
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${config.apiKey}`
-    };
+    let rawContent = '';
 
-    if (config.provider === 'openrouter') {
-      headers['HTTP-Referer'] = window.location.href;
-      headers['X-Title'] = 'AI Goal Planner';
+    if (config.provider === 'gemini') {
+      const response = await fetch(`${config.baseUrl}/models/${config.model}:generateContent?key=${config.apiKey}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: systemMessage }]
+          },
+          contents: [
+            {
+              role: 'user',
+              parts: [{ text: `Generate follow-up questions for: Goal: "${goal}", Timeframe: "${timeframe}". Output pure JSON object.` }]
+            }
+          ],
+          generationConfig: {
+            responseMimeType: 'application/json',
+            temperature: 0.7
+          }
+        })
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Gemini API returned error ${response.status}: ${errText}`);
+      }
+
+      const resJson = await response.json();
+      if (resJson.candidates && resJson.candidates[0]?.content?.parts[0]?.text) {
+        rawContent = resJson.candidates[0].content.parts[0].text.trim();
+      } else {
+        throw new Error("Empty response from Gemini API");
+      }
+    } else {
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config.apiKey}`
+      };
+
+      if (config.provider === 'openrouter') {
+        headers['HTTP-Referer'] = window.location.href;
+        headers['X-Title'] = 'AI Goal Planner';
+      }
+
+      const response = await fetch(`${config.baseUrl}/chat/completions`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          model: config.model,
+          messages: [
+            { role: 'system', content: systemMessage },
+            { role: 'user', content: `Generate follow-up questions for: Goal: "${goal}", Timeframe: "${timeframe}". Output pure JSON object.` }
+          ],
+          temperature: 0.7,
+          response_format: { type: 'json_object' }
+        })
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`API returned error ${response.status}: ${errText}`);
+      }
+
+      const data = await response.json();
+      rawContent = data.choices[0].message.content.trim();
     }
 
-    const response = await fetch(`${config.baseUrl}/chat/completions`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        model: config.model,
-        messages: [
-          { role: 'system', content: systemMessage },
-          { role: 'user', content: `Generate follow-up questions for: Goal: "${goal}", Timeframe: "${timeframe}". Output pure JSON object.` }
-        ],
-        temperature: 0.7,
-        response_format: { type: 'json_object' }
-      })
-    });
-
-    if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(`API returned error ${response.status}: ${errText}`);
-    }
-
-    const data = await response.json();
-    const rawContent = data.choices[0].message.content.trim();
-    const parsed = JSON.parse(rawContent);
+    const cleanJsonString = rawContent.replace(/```json/i, '').replace(/```/g, '').trim();
+    const parsed = JSON.parse(cleanJsonString);
     
     if (parsed && Array.isArray(parsed.questions)) {
       return parsed.questions.map((q: any, index: number) => ({
@@ -491,38 +531,78 @@ CRITICAL RULES:
 4. Output ONLY the JSON. Do not include markdown code block syntax. Do not output conversational filler. The response must be a single parseable JSON object.`;
 
   try {
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${config.apiKey}`
-    };
+    let rawContent = '';
 
-    if (config.provider === 'openrouter') {
-      headers['HTTP-Referer'] = window.location.href;
-      headers['X-Title'] = 'AI Goal Planner';
+    if (config.provider === 'gemini') {
+      const response = await fetch(`${config.baseUrl}/models/${config.model}:generateContent?key=${config.apiKey}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: systemMessage }]
+          },
+          contents: [
+            {
+              role: 'user',
+              parts: [{ text: `Generate the complete, customized roadmap JSON.` }]
+            }
+          ],
+          generationConfig: {
+            responseMimeType: 'application/json',
+            temperature: 0.5
+          }
+        })
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Gemini API returned error ${response.status}: ${errText}`);
+      }
+
+      const resJson = await response.json();
+      if (resJson.candidates && resJson.candidates[0]?.content?.parts[0]?.text) {
+        rawContent = resJson.candidates[0].content.parts[0].text.trim();
+      } else {
+        throw new Error("Empty response from Gemini API");
+      }
+    } else {
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config.apiKey}`
+      };
+
+      if (config.provider === 'openrouter') {
+        headers['HTTP-Referer'] = window.location.href;
+        headers['X-Title'] = 'AI Goal Planner';
+      }
+
+      const response = await fetch(`${config.baseUrl}/chat/completions`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          model: config.model,
+          messages: [
+            { role: 'system', content: systemMessage },
+            { role: 'user', content: `Generate the complete, customized roadmap JSON.` }
+          ],
+          temperature: 0.5,
+          response_format: { type: 'json_object' }
+        })
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`API returned error ${response.status}: ${errText}`);
+      }
+
+      const data = await response.json();
+      rawContent = data.choices[0].message.content.trim();
     }
 
-    const response = await fetch(`${config.baseUrl}/chat/completions`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        model: config.model,
-        messages: [
-          { role: 'system', content: systemMessage },
-          { role: 'user', content: `Generate the complete, customized roadmap JSON.` }
-        ],
-        temperature: 0.5,
-        response_format: { type: 'json_object' }
-      })
-    });
-
-    if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(`API returned error ${response.status}: ${errText}`);
-    }
-
-    const data = await response.json();
-    const rawContent = data.choices[0].message.content.trim();
-    const parsed = JSON.parse(rawContent);
+    const cleanJsonString = rawContent.replace(/```json/i, '').replace(/```/g, '').trim();
+    const parsed = JSON.parse(cleanJsonString);
 
     // Schema Validation & Correction
     if (parsed && typeof parsed.title === 'string' && Array.isArray(parsed.milestones)) {

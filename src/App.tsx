@@ -98,11 +98,11 @@ function App() {
   };
 
   return (
-    <div className="flex-grow flex flex-col min-h-screen relative bg-slate-950 overflow-x-hidden selection:bg-violet-600 selection:text-white">
+    <div className="flex-grow flex flex-col min-h-screen relative bg-slate-950 overflow-x-hidden selection:bg-brand-primary selection:text-white">
       
       {/* Dynamic Background pulsators */}
-      <div className="no-print absolute top-[-10%] left-[-10%] h-[50vh] w-[50vw] rounded-full bg-gradient-to-tr from-violet-900/10 to-transparent blur-[120px] pointer-events-none" />
-      <div className="no-print absolute bottom-[-10%] right-[-10%] h-[50vh] w-[50vw] rounded-full bg-gradient-to-tr from-cyan-900/10 to-transparent blur-[120px] pointer-events-none" />
+      <div className="no-print absolute top-[-10%] left-[-10%] h-[50vh] w-[50vw] rounded-full bg-gradient-to-tr from-brand-primary/10 to-transparent blur-[120px] pointer-events-none" />
+      <div className="no-print absolute bottom-[-10%] right-[-10%] h-[50vh] w-[50vw] rounded-full bg-gradient-to-tr from-brand-secondary/10 to-transparent blur-[120px] pointer-events-none" />
 
       {/* Header bar */}
       <Navbar 
@@ -145,7 +145,7 @@ function App() {
                 {!config.mockMode && (
                   <button
                     onClick={handleQuickEnableMockMode}
-                    className="flex items-center gap-1 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 rounded-lg px-3 py-1.5 text-xs font-bold border border-cyan-500/20 transition-all"
+                    className="flex items-center gap-1 bg-brand-secondary/10 hover:bg-brand-secondary/20 text-brand-secondary rounded-lg px-3 py-1.5 text-xs font-bold border border-brand-secondary/20 transition-all"
                   >
                     <HelpCircle className="h-3.5 w-3.5" />
                     Switch to Mock Simulation (Instant)
@@ -186,7 +186,7 @@ function App() {
               ) : (
                 <div className="text-center py-10">
                   <p className="text-slate-400">Roadmap was missing or failed to compile.</p>
-                  <button onClick={handleReset} className="mt-4 px-4 py-2 bg-violet-600 rounded-xl text-white">
+                  <button onClick={handleReset} className="mt-4 px-4 py-2 bg-brand-primary rounded-xl text-white shadow-lg shadow-brand-primary/20">
                     Return Home
                   </button>
                 </div>

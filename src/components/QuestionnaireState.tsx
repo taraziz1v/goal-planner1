@@ -97,9 +97,9 @@ export const QuestionnaireState: React.FC<QuestionnaireStateProps> = ({
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4 animate-fadeIn">
         <div className="relative flex items-center justify-center h-28 w-28 rounded-full bg-slate-900 border border-white/10 shadow-2xl mb-8">
-          <div className="absolute inset-0 rounded-full border border-cyan-500/30 animate-ping opacity-75" />
-          <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-cyan-500/10 to-violet-600/10 blur-xl animate-pulse" />
-          <Loader2 className="h-12 w-12 text-cyan-400 animate-spin" />
+          <div className="absolute inset-0 rounded-full border border-brand-secondary/30 animate-ping opacity-75" />
+          <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-brand-secondary/10 to-brand-primary/10 blur-xl animate-pulse" />
+          <Loader2 className="h-12 w-12 text-brand-secondary animate-spin" />
         </div>
         <h3 className="text-xl font-semibold text-white tracking-wide mb-2">Compiling Roadmap</h3>
         <p className="text-sm text-slate-400 max-w-sm mb-6 leading-relaxed">
@@ -113,7 +113,7 @@ export const QuestionnaireState: React.FC<QuestionnaireStateProps> = ({
               key={idx} 
               className={`flex items-center gap-2 transition-all duration-300 ${
                 idx === compilingStep 
-                  ? 'text-violet-400 translate-x-1 font-semibold' 
+                  ? 'text-brand-primary translate-x-1 font-semibold' 
                   : idx < compilingStep 
                     ? 'text-slate-500' 
                     : 'text-slate-800'
@@ -139,7 +139,7 @@ export const QuestionnaireState: React.FC<QuestionnaireStateProps> = ({
         </div>
         <div className="h-2 w-full bg-slate-900 border border-white/5 rounded-full overflow-hidden">
           <div 
-            className="h-full bg-gradient-to-r from-violet-600 to-cyan-500 rounded-full transition-all duration-300"
+            className="h-full bg-gradient-to-r from-brand-primary to-brand-secondary rounded-full transition-all duration-300"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
@@ -149,11 +149,11 @@ export const QuestionnaireState: React.FC<QuestionnaireStateProps> = ({
       <div className="rounded-2xl border border-white/8 bg-slate-900/30 backdrop-blur-md p-6 sm:p-8 shadow-2xl relative space-y-8">
         
         {/* Glow corner accent */}
-        <div className="absolute top-0 left-0 w-24 h-24 bg-cyan-600/5 blur-2xl rounded-br-full pointer-events-none" />
+        <div className="absolute top-0 left-0 w-24 h-24 bg-brand-secondary/5 blur-2xl rounded-br-full pointer-events-none" />
 
         {/* Title */}
         <div className="space-y-2 relative">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-cyan-500/10 px-3 py-1 text-[11px] text-cyan-300 font-semibold uppercase tracking-wider select-none">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-secondary/15 px-3 py-1 text-[11px] text-brand-secondary font-bold uppercase tracking-wider select-none">
             <Sparkles className="h-3 w-3" />
             Parameter {currentIdx + 1}
           </div>
@@ -175,17 +175,17 @@ export const QuestionnaireState: React.FC<QuestionnaireStateProps> = ({
                 onClick={() => handleSelectOption(choice)}
                 className={`text-left p-5 rounded-xl border text-sm leading-relaxed transition-all duration-300 relative group flex gap-3.5 ${
                   isSelected 
-                    ? 'border-violet-500 bg-violet-600/10 shadow-lg shadow-violet-500/5 text-white' 
+                    ? 'border-brand-primary bg-brand-primary/15 shadow-lg shadow-brand-primary/5 text-white' 
                     : 'border-white/5 bg-slate-900/20 hover:bg-slate-900/60 hover:border-white/12 text-slate-300 hover:text-white'
                 }`}
               >
                 {/* Selector ring */}
                 <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-all ${
                   isSelected 
-                    ? 'bg-violet-600 border-violet-500' 
+                    ? 'bg-brand-primary border-brand-primary' 
                     : 'border-slate-600 group-hover:border-slate-400'
                 }`}>
-                  {isSelected && <Check className="h-3.5 w-3.5 text-white" />}
+                  {isSelected && <Check className="h-3.5 w-3.5 text-white font-bold" />}
                 </div>
                 <span>{choice}</span>
               </button>
@@ -202,7 +202,7 @@ export const QuestionnaireState: React.FC<QuestionnaireStateProps> = ({
               <div 
                 className={`text-left p-5 rounded-xl border transition-all duration-300 relative flex gap-3.5 flex-col md:col-span-2 ${
                   isCustomActive 
-                    ? 'border-cyan-500 bg-cyan-600/10 shadow-lg shadow-cyan-500/5 text-white' 
+                    ? 'border-brand-secondary bg-brand-secondary/15 shadow-lg shadow-brand-secondary/5 text-white' 
                     : 'border-white/5 bg-slate-900/20 hover:bg-slate-900/60 hover:border-white/12 text-slate-300'
                 }`}
               >
@@ -210,10 +210,10 @@ export const QuestionnaireState: React.FC<QuestionnaireStateProps> = ({
                   {/* Selection Indicator Ring */}
                   <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-all ${
                     isCustomActive 
-                      ? 'bg-cyan-500 border-cyan-500' 
+                      ? 'bg-brand-secondary border-brand-secondary' 
                       : 'border-slate-600'
                   }`}>
-                    {isCustomActive && <Check className="h-3.5 w-3.5 text-white" />}
+                    {isCustomActive && <Check className="h-3.5 w-3.5 text-white font-bold" />}
                   </div>
                   
                   <div className="flex-1 space-y-2">
@@ -252,10 +252,10 @@ export const QuestionnaireState: React.FC<QuestionnaireStateProps> = ({
             <button
               onClick={handleSubmit}
               disabled={!isCurrentQuestionAnswered}
-              className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-bold text-white shadow-xl shadow-violet-500/10 bg-gradient-to-r from-violet-600 to-cyan-500 hover:from-violet-500 hover:to-cyan-400 disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-all duration-200"
+              className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-bold text-slate-950 shadow-xl shadow-brand-primary/10 bg-gradient-to-r from-brand-primary to-brand-secondary hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-all duration-200"
             >
               Submit Answers
-              <Check className="h-4 w-4" />
+              <Check className="h-4 w-4 text-slate-950 font-bold" />
             </button>
           ) : (
             <button

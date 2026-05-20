@@ -27,14 +27,17 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, c
   }, [config, isOpen]);
 
   // Autofill base URL and model defaults when provider toggles
-  const handleProviderChange = (prov: 'openai' | 'openrouter') => {
+  const handleProviderChange = (prov: 'openai' | 'openrouter' | 'gemini') => {
     setProvider(prov);
     if (prov === 'openai') {
       setBaseUrl('https://api.openai.com/v1');
       setModel('gpt-4o-mini');
-    } else {
+    } else if (prov === 'openrouter') {
       setBaseUrl('https://openrouter.ai/api/v1');
       setModel('google/gemini-2.5-flash');
+    } else {
+      setBaseUrl('https://generativelanguage.googleapis.com/v1beta');
+      setModel('gemini-2.5-flash');
     }
   };
 
@@ -93,9 +96,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, c
               <button
                 type="button"
                 onClick={() => setMockMode(true)}
-                className={`py-2 px-3 text-xs font-medium rounded-lg transition-all duration-200 ${
+                className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all duration-200 ${
                   mockMode 
-                    ? 'bg-gradient-to-r from-cyan-600 to-cyan-500 text-white shadow-md' 
+                    ? 'bg-brand-secondary text-slate-950 shadow-md font-bold' 
                     : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
@@ -104,9 +107,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, c
               <button
                 type="button"
                 onClick={() => setMockMode(false)}
-                className={`py-2 px-3 text-xs font-medium rounded-lg transition-all duration-200 ${
+                className={`py-2 px-3 text-xs font-semibold rounded-lg transition-all duration-200 ${
                   !mockMode 
-                    ? 'bg-gradient-to-r from-violet-600 to-violet-500 text-white shadow-md' 
+                    ? 'bg-brand-primary text-white shadow-md font-bold shadow-brand-primary/10' 
                     : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
@@ -131,9 +134,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, c
                   <button
                     type="button"
                     onClick={() => handleProviderChange('openai')}
-                    className={`flex-1 py-1.5 px-3 text-xs font-semibold rounded-lg border transition-all ${
+                    className={`flex-1 py-1.5 px-1.5 text-[11px] font-semibold rounded-lg border transition-all ${
                       provider === 'openai' 
-                        ? 'bg-white/10 text-white border-white/20' 
+                        ? 'bg-brand-primary/20 text-white border-brand-primary/40' 
                         : 'bg-transparent text-slate-400 border-white/5 hover:border-white/10 hover:text-slate-200'
                     }`}
                   >
@@ -142,13 +145,24 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, c
                   <button
                     type="button"
                     onClick={() => handleProviderChange('openrouter')}
-                    className={`flex-1 py-1.5 px-3 text-xs font-semibold rounded-lg border transition-all ${
+                    className={`flex-1 py-1.5 px-1.5 text-[11px] font-semibold rounded-lg border transition-all ${
                       provider === 'openrouter' 
-                        ? 'bg-white/10 text-white border-white/20' 
+                        ? 'bg-brand-primary/20 text-white border-brand-primary/40' 
                         : 'bg-transparent text-slate-400 border-white/5 hover:border-white/10 hover:text-slate-200'
                     }`}
                   >
                     OpenRouter
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleProviderChange('gemini')}
+                    className={`flex-1 py-1.5 px-1.5 text-[11px] font-semibold rounded-lg border transition-all ${
+                      provider === 'gemini' 
+                        ? 'bg-brand-primary/20 text-white border-brand-primary/40' 
+                        : 'bg-transparent text-slate-400 border-white/5 hover:border-white/10 hover:text-slate-200'
+                    }`}
+                  >
+                    Gemini
                   </button>
                 </div>
               </div>
@@ -223,10 +237,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, c
             </button>
             <button
               type="submit"
-              className={`flex-1 py-2 px-4 rounded-xl text-sm font-medium text-white shadow-lg active:scale-98 transition-all ${
+              className={`flex-1 py-2 px-4 rounded-xl text-sm font-semibold shadow-lg active:scale-98 transition-all ${
                 mockMode 
-                  ? 'bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 shadow-cyan-500/10' 
-                  : 'bg-gradient-to-r from-violet-600 to-violet-500 hover:from-violet-500 hover:to-violet-400 shadow-violet-500/10'
+                  ? 'bg-brand-secondary text-slate-950 hover:opacity-90 shadow-brand-secondary/15' 
+                  : 'bg-brand-primary text-white hover:opacity-90 shadow-brand-primary/15'
               }`}
             >
               Save Changes

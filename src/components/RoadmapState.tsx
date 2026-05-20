@@ -43,14 +43,14 @@ export const RoadmapState: React.FC<RoadmapStateProps> = ({ plan, onReset }) => 
         angle: 60,
         spread: 55,
         origin: { x: 0 },
-        colors: ['#a78bfa', '#22d3ee', '#818cf8']
+        colors: ['#ff2d78', '#00ffcc', '#ffffff']
       });
       confetti({
         particleCount: 4,
         angle: 120,
         spread: 55,
         origin: { x: 1 },
-        colors: ['#a78bfa', '#22d3ee', '#818cf8']
+        colors: ['#ff2d78', '#00ffcc', '#ffffff']
       });
 
       if (Date.now() < end) {
@@ -97,17 +97,17 @@ export const RoadmapState: React.FC<RoadmapStateProps> = ({ plan, onReset }) => 
     <div className="max-w-4xl mx-auto px-4 py-8 animate-fadeIn print-container">
       
       {/* Decorative Blob */}
-      <div className="absolute top-40 right-10 -z-10 h-64 w-64 rounded-full bg-gradient-to-br from-violet-600/5 to-cyan-500/5 blur-3xl opacity-50 pointer-events-none" />
+      <div className="absolute top-40 right-10 -z-10 h-64 w-64 rounded-full bg-gradient-to-br from-brand-primary/5 to-brand-secondary/5 blur-3xl opacity-50 pointer-events-none" />
 
       {/* Overview Dashboard Card */}
       <div className="rounded-2xl border border-white/8 bg-slate-900/30 backdrop-blur-md p-6 sm:p-8 shadow-2xl relative space-y-6 mb-8 print-card">
         
         {/* Glow accent */}
-        <div className="absolute top-0 right-0 w-24 h-24 bg-violet-600/5 blur-2xl rounded-bl-full pointer-events-none" />
+        <div className="absolute top-0 right-0 w-24 h-24 bg-brand-primary/5 blur-2xl rounded-bl-full pointer-events-none" />
 
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
           <div className="space-y-2.5 flex-1">
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-violet-500/10 px-3 py-1 text-xs text-violet-300 font-semibold select-none border border-violet-500/10">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-primary/10 px-3 py-1 text-xs text-brand-primary font-bold select-none border border-brand-primary/15">
               <Calendar className="h-3.5 w-3.5" />
               Timeframe: {plan.timeframe}
             </div>
@@ -129,7 +129,7 @@ export const RoadmapState: React.FC<RoadmapStateProps> = ({ plan, onReset }) => 
                   cx="32" 
                   cy="32" 
                   r="28" 
-                  className="stroke-violet-500 transition-all duration-500" 
+                  className="stroke-brand-primary transition-all duration-500" 
                   strokeWidth="4" 
                   fill="transparent" 
                   strokeDasharray={`${2 * Math.PI * 28}`}
@@ -182,17 +182,17 @@ export const RoadmapState: React.FC<RoadmapStateProps> = ({ plan, onReset }) => 
           <div key={milestone.id} className="relative space-y-4 print-card">
             
             {/* Timeline Marker Dot */}
-            <div className="no-print absolute -left-[31px] sm:-left-[39px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-slate-950 border-2 border-violet-500 shadow-md shadow-violet-500/20">
-              <div className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
+            <div className="no-print absolute -left-[31px] sm:-left-[39px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-slate-950 border-2 border-brand-primary shadow-md shadow-brand-primary/20">
+              <div className="h-1.5 w-1.5 rounded-full bg-brand-primary animate-pulse" />
             </div>
 
             {/* Milestone Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
               <h3 className="text-lg font-bold text-white tracking-tight m-0 flex items-center gap-2 print-text-dark">
-                <Sparkles className="h-4 w-4 text-cyan-400 no-print" />
+                <Sparkles className="h-4 w-4 text-brand-secondary no-print" />
                 {milestone.title}
               </h3>
-              <span className="inline-flex items-center rounded-lg bg-cyan-500/10 px-2.5 py-1 text-xs font-semibold text-cyan-300 border border-cyan-500/10 shrink-0 self-start sm:self-center print-card print-text-dark">
+              <span className="inline-flex items-center rounded-lg bg-brand-secondary/10 px-2.5 py-1 text-xs font-bold text-brand-secondary border border-brand-secondary/15 shrink-0 self-start sm:self-center print-card print-text-dark">
                 {milestone.duration}
               </span>
             </div>
@@ -208,14 +208,14 @@ export const RoadmapState: React.FC<RoadmapStateProps> = ({ plan, onReset }) => 
                     onClick={() => handleToggleTask(task.id)}
                     className={`w-full text-left p-4.5 rounded-xl border transition-all duration-300 relative flex items-start gap-4 group cursor-pointer ${
                       isChecked 
-                        ? 'border-violet-500/30 bg-violet-950/10 shadow-inner' 
+                        ? 'border-brand-primary/30 bg-brand-primary/10 shadow-inner' 
                         : 'border-white/5 bg-slate-900/15 hover:bg-slate-900/50 hover:border-white/10'
                     } print-card`}
                   >
                     {/* Left Custom Checkbox Button Icon */}
                     <div className="shrink-0 mt-0.5 transition-transform duration-200 active:scale-75 select-none">
                       {isChecked ? (
-                        <CheckCircle className="h-5.5 w-5.5 text-violet-500 filter drop-shadow-[0_0_8px_rgba(139,92,246,0.3)] animate-[scaleIn_0.2s_ease-out]" />
+                        <CheckCircle className="h-5.5 w-5.5 text-brand-primary filter drop-shadow-[0_0_8px_rgba(255,45,120,0.3)] animate-[scaleIn_0.2s_ease-out]" />
                       ) : (
                         <Circle className="h-5.5 w-5.5 text-slate-500 group-hover:text-slate-400 transition-colors" />
                       )}
@@ -250,9 +250,9 @@ export const RoadmapState: React.FC<RoadmapStateProps> = ({ plan, onReset }) => 
 
       {/* Completion Trophy Card */}
       {progressPercent === 100 && (
-        <div className="mt-12 p-6 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-violet-600/10 to-cyan-500/10 backdrop-blur-md flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left animate-[fadeIn_0.5s_ease-out] print-card">
-          <div className="h-12 w-12 rounded-xl bg-gradient-to-tr from-violet-600 to-cyan-500 flex items-center justify-center text-white shadow-lg">
-            <Award className="h-6 w-6" />
+        <div className="mt-12 p-6 rounded-2xl border border-brand-secondary/20 bg-gradient-to-r from-brand-primary/10 to-brand-secondary/10 backdrop-blur-md flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left animate-[fadeIn_0.5s_ease-out] print-card">
+          <div className="h-12 w-12 rounded-xl bg-gradient-to-tr from-brand-primary to-brand-secondary flex items-center justify-center text-slate-950 shadow-lg font-bold">
+            <Award className="h-6 w-6 text-slate-950" />
           </div>
           <div>
             <h4 className="text-base font-bold text-white m-0 print-text-dark">Roadmap Completed!</h4>
