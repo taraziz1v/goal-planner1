@@ -1,70 +1,99 @@
 import React from 'react';
-import { Compass, Settings, RotateCcw } from 'lucide-react';
+import { Compass, Settings, RotateCcw, Globe } from 'lucide-react';
 import type { ApiConfig } from '../utils/ai';
 
 interface NavbarProps {
   config: ApiConfig;
+  lang: 'en' | 'ar';
+  setLang: (lang: 'en' | 'ar') => void;
   onOpenSettings: () => void;
   onReset: () => void;
   showReset: boolean;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ config, onOpenSettings, onReset, showReset }) => {
+export const Navbar: React.FC<NavbarProps> = ({ 
+  config, 
+  lang, 
+  setLang, 
+  onOpenSettings, 
+  onReset, 
+  showReset 
+}) => {
+  const toggleLanguage = () => {
+    setLang(lang === 'ar' ? 'en' : 'ar');
+  };
+
   return (
-    <header className="no-print glass-panel sticky top-0 z-40 w-full border-b border-white/5 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="no-print bg-surface text-on-surface sticky top-0 z-40 w-full border-b-[3px] border-black py-3 px-4 sm:px-6">
+      <div className="mx-auto flex max-w-7xl items-center justify-between">
         
-        {/* Logo and Brand */}
-        <div className="flex items-center gap-2.5 cursor-pointer" onClick={onReset}>
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-primary to-brand-secondary shadow-lg shadow-brand-primary/20">
-            <Compass className="h-5.5 w-5.5 text-slate-950 animate-pulse-slow font-bold" />
-            <div className="absolute inset-0 rounded-xl bg-white/10 opacity-0 transition-opacity hover:opacity-100" />
+        {/* Left Side: Brand Logo */}
+        <div className="flex items-center gap-3 cursor-pointer" onClick={onReset}>
+          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center border-2 border-black bg-secondary-container hard-shadow">
+            <Compass className="h-5.5 w-5.5 text-black font-bold" />
           </div>
-          <div>
-            <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent m-0 select-none">
-              Goal Planner <span className="text-xs font-bold text-brand-primary">AI</span>
+          <div className="hidden sm:block">
+            <h1 className="text-lg font-display font-extrabold tracking-tight text-on-surface m-0 leading-tight">
+              {lang === 'ar' ? 'مخطط الأهداف' : 'Goal Planner'}{' '}
+              <span className="text-xs font-bold text-tertiary-container">
+                {lang === 'ar' ? 'الذكي' : 'AI'}
+              </span>
             </h1>
-            <p className="text-[10px] text-slate-400 tracking-wider uppercase font-semibold m-0 leading-tight select-none">
-              Roadmap Generator
+            <p className="text-[9px] text-outline font-bold tracking-wider uppercase m-0 leading-none">
+              {lang === 'ar' ? 'مولد خطط العمل التفاعلية' : 'Roadmap Generator'}
             </p>
           </div>
         </div>
 
-        {/* System Settings & Badge info */}
-        <div className="flex items-center gap-3">
+        {/* Right Side: Control Stack */}
+        <div className="flex items-center gap-2.5 sm:gap-3.5">
           
-          {/* Simulation mode indicator badge */}
-          {config.mockMode ? (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-secondary/15 px-2.5 py-1 text-xs font-semibold text-brand-secondary border border-brand-secondary/30">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-secondary animate-pulse" />
-              Mock Simulation
-            </span>
-          ) : (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-primary/15 px-2.5 py-1 text-xs font-semibold text-brand-primary border border-brand-primary/30">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-primary animate-pulse" />
-              Live AI Mode
-            </span>
-          )}
+          {/* Status Indicator Badge */}
+          <div className="hidden md:inline-flex">
+            {config.mockMode ? (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold text-black border-2 border-black bg-white hard-shadow">
+                <span className="h-2 w-2 rounded-full bg-secondary-container" />
+                {lang === 'ar' ? 'محاكاة سريعة' : 'Mock Mode'}
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold text-black border-2 border-black bg-tertiary-container/10 hard-shadow">
+                <span className="h-2 w-2 rounded-full bg-tertiary-container animate-pulse" />
+                {lang === 'ar' ? 'ذكاء مباشر' : 'Live AI'}
+              </span>
+            )}
+          </div>
 
-          {/* Reset Button */}
+          {/* Bilingual Language Switcher Button (Stitch inspired) */}
+          <button
+            onClick={toggleLanguage}
+            className="flex items-center gap-1.5 px-3 py-1.5 border-2 border-black font-display text-xs font-bold bg-white hard-shadow hover:bg-surface-container-low transition-all active:scale-95 cursor-pointer"
+            title={lang === 'ar' ? 'Switch to English' : 'تحويل للغة العربية'}
+          >
+            <Globe className="h-4 w-4 text-black" />
+            <span className="font-extrabold">{lang === 'ar' ? 'EN' : 'عربي'}</span>
+          </button>
+
+          {/* Reset / Return Button */}
           {showReset && (
             <button
               onClick={onReset}
-              className="flex items-center justify-center p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all active:scale-95 duration-200"
-              title="Start Over"
+              className="px-3.5 py-1.5 border-2 border-black font-display text-xs font-bold bg-white hard-shadow hover:bg-surface-container-low transition-all active:scale-95 cursor-pointer flex items-center gap-1"
+              title={lang === 'ar' ? 'البدء من جديد' : 'Start Over'}
             >
-              <RotateCcw className="h-5 w-5" />
+              <RotateCcw className="h-4 w-4 text-black" />
+              <span className="hidden sm:inline">{lang === 'ar' ? 'الخطة' : 'The Plan'}</span>
             </button>
           )}
 
-          {/* Settings Trigger */}
+          {/* Settings Trigger Icon (Neo-brutalist CTA) */}
           <button
             onClick={onOpenSettings}
-            className="flex items-center justify-center p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 border border-white/5 hover:border-white/10 transition-all active:scale-95 duration-200 bg-slate-900/50"
-            title="Configure AI API Settings"
+            className="p-1.5 border-2 border-black bg-secondary-container hard-shadow hover:hard-shadow-hover transition-all active:scale-95 cursor-pointer flex items-center justify-center"
+            title={lang === 'ar' ? 'إعدادات محرك الذكاء الاصطناعي' : 'Configure API Engine'}
           >
-            <Settings className="h-5 w-5" />
+            <Settings className="h-4.5 w-4.5 text-black" />
           </button>
+
         </div>
 
       </div>

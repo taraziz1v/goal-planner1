@@ -1,25 +1,71 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poiret+One&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 @import "tailwindcss";
 
 @theme {
   --color-brand-primary: #ff2d78;
   --color-brand-secondary: #00ffcc;
   --color-brand-tertiary: #ffe04a;
+
+  /* Custom Neo-brutalist theme colors from Stitch */
+  --color-primary: #615d35;
+  --color-secondary: #785a00;
+  --color-tertiary: #005ab4;
+  --color-background: #f9f9ff;
   
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-headline: 'Sora', sans-serif;
-  --font-mono: 'Space Grotesk', monospace;
+  --color-surface-bright: #f9f9ff;
+  --color-primary-fixed-dim: #cec897;
+  --color-on-secondary: #ffffff;
+  --color-on-primary: #ffffff;
+  --color-inverse-surface: #2d3038;
+  --color-surface-container: #ecedf7;
+  --color-on-background: #181c22;
+  --color-surface-tint: #646038;
+  --color-surface-variant: #e0e2ec;
+  --color-on-surface-variant: #414753;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface: #ffffff;
+  --color-inverse-on-surface: #eff0fa;
+  --color-surface-container-highest: #e0e2ec;
+  --color-on-tertiary-container: #fefcff;
+  --color-on-primary-container: #fffbff;
+  --color-tertiary-container: #0873df;
+  --color-primary-fixed: #ebe4b1;
+  --color-surface-container-high: #e6e8f1;
+  --color-on-secondary-container: #6c5000;
+  --color-on-error: #ffffff;
+  --color-tertiary-fixed-dim: #aac7ff;
+  --color-on-surface: #181c22;
+  --color-surface-container-low: #f2f3fd;
+  --color-secondary-fixed: #ffdf9d;
+  --color-outline: #717785;
+  --color-outline-variant: #c1c6d5;
+  --color-secondary-fixed-dim: #fabd00;
+  --color-inverse-primary: #cec897;
+  --color-error: #ba1a1a;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-fixed: #d6e3ff;
+  --color-primary-container: #7a764c;
+  
+  /* Fonts Mapping */
+  --font-sans: 'Inter', 'Cairo', system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', 'Tajawal', sans-serif;
+  --font-headline: 'Plus Jakarta Sans', 'Cairo', sans-serif;
+  --font-body-lg: 'Poiret One', 'Cairo', sans-serif;
+  --font-body-md: 'Poiret One', 'Cairo', sans-serif;
+  --font-label: 'Inter', 'Cairo', sans-serif;
 }
 
 @layer base {
   body {
     font-family: var(--font-sans);
-    background-color: #0a0a12;
-    background-image: 
-      radial-gradient(at 0% 0%, rgba(255, 45, 120, 0.08) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(0, 255, 204, 0.08) 0px, transparent 50%),
-      radial-gradient(at 50% 0%, rgba(10, 10, 18, 1) 0px, rgba(10, 10, 18, 0.9) 100%);
-    @apply antialiased text-slate-100 selection:bg-brand-primary selection:text-white min-h-screen overflow-x-hidden;
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+    @apply antialiased min-h-screen overflow-x-hidden;
+  }
+  
+  ::selection {
+    background-color: #fdc000;
+    color: #000000;
   }
   
   #root {
@@ -31,128 +77,45 @@
   }
 }
 
-/* Neon Glow Classes */
-.text-neon-pink {
-  color: var(--color-brand-primary);
-  text-shadow: 0 0 8px rgba(255, 45, 120, 0.6);
+/* Neo-brutalist Hard Shadows & Accents */
+.hard-shadow {
+  box-shadow: 4px 4px 0px 0px #000000;
 }
 
-.text-neon-cyan {
-  color: var(--color-brand-secondary);
-  text-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
-}
-
-.text-neon-yellow {
-  color: var(--color-brand-tertiary);
-  text-shadow: 0 0 8px rgba(255, 224, 74, 0.6);
-}
-
-/* Neon Tokyo Glass Panels */
-.glass-panel {
-  background: rgba(10, 10, 18, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 45, 120, 0.2);
-  box-shadow: 
-    0 10px 40px -15px rgba(0, 0, 0, 0.8),
-    inset 0 0 12px rgba(255, 45, 120, 0.05);
-}
-
-.glass-panel-cyan {
-  background: rgba(10, 10, 18, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 255, 204, 0.2);
-  box-shadow: 
-    0 10px 40px -15px rgba(0, 0, 0, 0.8),
-    inset 0 0 12px rgba(0, 255, 204, 0.05);
-}
-
-.glass-panel-light {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-.glass-card {
-  background: rgba(15, 15, 26, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.glass-card:hover {
-  background: rgba(15, 15, 26, 0.85);
-  border-color: rgba(255, 45, 120, 0.45);
-  box-shadow: 
-    0 12px 30px -10px rgba(255, 45, 120, 0.2),
-    0 0 16px rgba(255, 45, 120, 0.1);
-  transform: translateY(-2px);
-}
-
-.glass-card-cyan:hover {
-  background: rgba(15, 15, 26, 0.85);
-  border-color: rgba(0, 255, 204, 0.45);
-  box-shadow: 
-    0 12px 30px -10px rgba(0, 255, 204, 0.2),
-    0 0 16px rgba(0, 255, 204, 0.1);
-  transform: translateY(-2px);
-}
-
-.glass-input {
-  background: rgba(10, 10, 18, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.hard-shadow-hover {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family: var(--font-mono);
 }
 
-.glass-input:focus {
-  background: rgba(10, 10, 18, 0.95);
-  border-color: var(--color-brand-primary);
-  box-shadow: 
-    0 0 0 1px var(--color-brand-primary),
-    0 0 12px rgba(255, 45, 120, 0.25);
-  outline: none;
+.hard-shadow-hover:hover {
+  box-shadow: 6px 6px 0px 0px #000000;
+  transform: translate(-2px, -2px);
 }
 
-.glass-input-cyan:focus {
-  background: rgba(10, 10, 18, 0.95);
-  border-color: var(--color-brand-secondary);
-  box-shadow: 
-    0 0 0 1px var(--color-brand-secondary),
-    0 0 12px rgba(0, 255, 204, 0.25);
-  outline: none;
+.active-glow {
+  box-shadow: 0 0 15px rgba(8, 115, 223, 0.25);
 }
 
-/* Animations */
-@keyframes pulse-slow {
-  0%, 100% { opacity: 0.15; transform: scale(1); }
-  50% { opacity: 0.3; transform: scale(1.05); }
+.rtl-flip {
+  transform: scaleX(-1);
 }
 
-.animate-pulse-slow {
-  animation: pulse-slow 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(10, 10, 18, 0.9);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 45, 120, 0.15);
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 45, 120, 0.1);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 45, 120, 0.4);
-  box-shadow: 0 0 8px rgba(255, 45, 120, 0.6);
+/* Material Symbols Integration */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
 }
 
 /* Printing Adjustments */
@@ -175,17 +138,17 @@
 
   .print-card {
     background: transparent !important;
-    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+    border: 2px solid #000000 !important;
     color: black !important;
     box-shadow: none !important;
     page-break-inside: avoid;
   }
   
   .print-text-dark {
-    color: #0f172a !important;
+    color: #000000 !important;
   }
 
   .print-text-light {
-    color: #475569 !important;
+    color: #333333 !important;
   }
 }
